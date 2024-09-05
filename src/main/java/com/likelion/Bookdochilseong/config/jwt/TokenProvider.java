@@ -25,20 +25,21 @@ public class TokenProvider {
         Date now = new Date();
         return makeToken(new Date(now.getTime() + expiredAt.toMillis()), user);
     }
+    //jwt 토큰 생성
     public String makeToken(Date expiry, TblUser user){
         Date now = new Date();
 
         return Jwts.builder()
-                .setHeaderParam(Header.TYPE,Header.JWT_TYPE)
-                .setIssuer(jwtProperties.getIssuer())
-                .setIssuedAt(now)
-                .setExpiration(expiry)
-                .setSubject(user.getNickname())
-                .claim("id",user.getId())
-                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
+                .setHeaderParam(Header.TYPE,Header.JWT_TYPE) //헤더 typ: Jwt
+                .setIssuer(jwtProperties.getIssuer()) //properties에서 설정한 값
+                .setIssuedAt(now) // 현재시간
+                .setExpiration(expiry) // expiry 변수값
+                .setSubject(user.getNickname()) // 유저 닉네임
+                .claim("id",user.getId()) // 클레임 id: 유저 ID
+                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey()) // 서명 : 비밀값과 함게 해시값을 hs256 방식으로 암호화
                 .compact();
     }
-
+    //jwt 토큰 유효성 검증 메서드
     public boolean validToken(String token){
         try{
             Jwts.parser()
@@ -50,7 +51,7 @@ public class TokenProvider {
             return false;
         }
     }
-
+    //토큰 기반으로 인증 정보를 가져오는 메서드
     public Authentication getAuthentication(String token){
         Claims claims = getClaims(token);
         Set<SimpleGrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
@@ -58,7 +59,7 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(new org.springframework.security.core.userdetails.User(claims.getSubject()
                 , "",authorities),token,authorities);
     }
-
+    //토큰 기반으로 유저 id를 가져오는 메서드
     public Long getUserId(String token){
         Claims claims = getClaims(token);
         return claims.get("id",Long.class);
