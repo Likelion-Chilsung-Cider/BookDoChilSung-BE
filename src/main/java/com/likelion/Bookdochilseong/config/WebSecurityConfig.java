@@ -22,37 +22,32 @@ public class WebSecurityConfig {
     //특정 http 요청에 대한 웹 기반 보안 구성
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.csrf().disable()
-                .httpBasic().disable()
-                .formLogin().disable()
-                .logout().disable();
+        //토큰방식이므로 폼 로그인, 세션 비활성화
+        http.csrf(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable);
 
-        http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
+        //헤더를 확인할 커스텀 필터 추가
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        http.authorizeRequests()
-                .requestMatchers("/api/token").permitAll()
-                .requestMatchers("/").permitAll()
-                .requestMatchers("/api/**").authenticated()
-                .anyRequest().permitAll(); // 주의
+        //토큰 재발급 url은 인증 없이 접근 가능 나머지 api url은 인증 필요
+        http.authorizeRequests(auth -> auth.requestMatchers(new AntPathRequestMatcher("/api/token")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated()
+                        .anyRequest().permitAll());
 
-        http.oauth2Login()
-                .loginPage("/api/login")
-                .authorizationEndpoint()
-                .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
-                .and()
-                .successHandler(oAuth2SuccessHandler())
-                .userInfoEndpoint()
-                .userService();
-
-        http.logout()
-                .logoutSuccessUrl("/api/login");
-
-        http.exceptionHandling()
-                .defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),
-                        new AntPathRequestMatcher("/api/**"));
+        http.oauth2Login(oauth2 -> oauth2.loginPage("/api/login")
+                        .authorizationEndpoint(auth -> auth.authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()))
+                        .userInfoEndpoint(user -> user.userService(oAuth2UserCustomService))
+                        .successHandler(oAuth2SuccessHandler())
+                );
+        // /api로 시작하는 url인 경우 401 상태 코드를 반환한도록 예외처리
+        http.exceptionHandling(exception -> exception.defaultAuthenticationEntryPointFor(
+                new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),
+                new AntPathRequestMatcher("/api/**")
+                ));
 
         return http.build();
     }
