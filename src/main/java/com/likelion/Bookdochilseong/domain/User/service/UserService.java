@@ -13,4 +13,8 @@ public class UserService {
     public TblUser findById(Long userId){
         return userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Unexpected User"));
     }
+
+    public TblUser findByNickname(String nickname){
+        return userRepository.findByNickname(nickname).orElseThrow(() -> new IllegalArgumentException("Unexpected User"));
+    }
 }

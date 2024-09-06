@@ -1,6 +1,11 @@
 package com.likelion.Bookdochilseong.config;
 
+import com.likelion.Bookdochilseong.config.jwt.TokenProvider;
+import com.likelion.Bookdochilseong.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.likelion.Bookdochilseong.config.oauth.OAuth2SuccessHandler;
+import com.likelion.Bookdochilseong.config.oauth.OAuth2UserCustomService;
+import com.likelion.Bookdochilseong.domain.User.repository.RefreshTokenRepository;
+import com.likelion.Bookdochilseong.domain.User.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +24,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
+    private final OAuth2UserCustomService oAuth2UserCustomService;
+    private final TokenProvider tokenProvider;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final UserService userService;
     //특정 http 요청에 대한 웹 기반 보안 구성
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{

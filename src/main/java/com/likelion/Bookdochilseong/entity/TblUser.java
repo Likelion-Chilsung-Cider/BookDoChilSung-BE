@@ -3,6 +3,7 @@ package com.likelion.Bookdochilseong.entity;
 import com.likelion.Bookdochilseong.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +27,12 @@ public class TblUser extends BaseEntity implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Builder
+    public TblUser(String nickname, String password){
+        this.nickname = nickname;
+        this.password = password;
+        this.profileImg = null;
+    }
     public TblUser update(String name){
         this.nickname = nickname;
 
