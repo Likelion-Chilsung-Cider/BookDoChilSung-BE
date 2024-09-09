@@ -20,17 +20,22 @@ public class TblUser extends BaseEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "uid")
+    private Long uId;
     @Column(name = "nickname", nullable = false , unique = true)
     private String nickname;
     @Column(name = "profileImg")
     private String profileImg;
     @Column(name = "password")
     private String password;
+    @Column(name = "accessToken")
+    private String accessToken;
 
     @Builder
-    public TblUser(String nickname, String password){
+    public TblUser(String nickname, String password,Long uId){
         this.nickname = nickname;
         this.password = password;
+        this.uId = uId;
         this.profileImg = null;
     }
     public TblUser update(String name){
