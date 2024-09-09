@@ -29,3 +29,16 @@ spring:
 jwt:
   issuer: changm1n
   secret_key: dlscjseogkrryajtwoddltkwkcjfjadusgkqspxmdnjzld
+
+cloud:
+  aws:
+    s3:
+      bucket: yoribogo
+    credentials:
+      access-key:
+      secret-key:
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false

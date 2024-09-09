@@ -43,9 +43,13 @@ public class TblUser extends BaseEntity implements UserDetails {
 
         return this;
     }
-
+    //닉네임 수정 메서드
     public void patchNickname(String nickname){
         this.nickname = nickname;
+    }
+    //프로필이미지 수정 메서드
+    public void patchProfileImg(String imgUrl){
+        this.profileImg = imgUrl;
     }
     // UserDetails 오버라이드
     @Override
