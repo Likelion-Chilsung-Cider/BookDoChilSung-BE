@@ -43,6 +43,10 @@ public class TblUser extends BaseEntity implements UserDetails {
 
         return this;
     }
+
+    public void patchNickname(String nickname){
+        this.nickname = nickname;
+    }
     // UserDetails 오버라이드
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
