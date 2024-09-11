@@ -21,4 +21,13 @@ public class BookController {
     ) {
         return ResponseEntity.ok().body(bookService.searchBook(title, startPage, maxResults));
     }
+
+    // 책 정보 조회 (사용자별)
+    @GetMapping("/api/book/searchBookInfo")
+    public ResponseEntity<?> searchBookInfo(
+            @RequestParam(name = "user_seq") Long userSeq,
+            @RequestParam(name = "reading_status") int readingStatus
+    ) {
+        return ResponseEntity.ok().body(bookService.searchBookInfo(userSeq, readingStatus));
+    }
 }

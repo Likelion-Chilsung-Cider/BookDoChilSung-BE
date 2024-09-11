@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -24,6 +26,8 @@ public class BookServiceImpl implements BookService {
     /**
      * 책 정보 조회
      * @param title
+     * @param startPage
+     * @param maxResults
      * @return SearchBookListDTO
      */
     @Override
@@ -42,7 +46,22 @@ public class BookServiceImpl implements BookService {
         .block();
         log.info("알라딘 API 호출 완료");
 
-        // Todo 성공코드 수정
+        // TODO 성공코드 수정
         return ApiResponse.SUCCESS(SuccessCode.CREATE_USER, searchBookListDTO);
+    }
+
+    /**
+     * 책 정보 조회 (사용자별)
+     * @param userSeq
+     * @param readingStatus
+     * @return
+     */
+    @Override
+    public ApiResponse<?> searchBookInfo(Long userSeq, int readingStatus) {
+        // 1. 독서 상태, 책 테이블 조인해서 데이터 조회 (userSeq or session) + readingStatus 조회조건 추가
+        //List<ReadingStatusResponseDTO.SearchUserBookList> statusLists = readingStatusRepository.findByUserSeq(userSeq);
+        
+        // TODO 성공 코드 수정
+        return ApiResponse.SUCCESS(SuccessCode.CREATE_USER);
     }
 }
