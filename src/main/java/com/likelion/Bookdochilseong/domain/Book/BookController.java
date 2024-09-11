@@ -1,6 +1,6 @@
-package com.likelion.Bookdochilseong.domain.tblBook;
+package com.likelion.Bookdochilseong.domain.Book;
 
-import com.likelion.Bookdochilseong.domain.tblBook.service.BookService;
+import com.likelion.Bookdochilseong.domain.Book.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

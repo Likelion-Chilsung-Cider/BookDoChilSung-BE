@@ -1,4 +1,4 @@
-package com.likelion.Bookdochilseong.domain.tblBook.service;
+package com.likelion.Bookdochilseong.domain.Book.service;
 
 import com.likelion.Bookdochilseong.global.response.ApiResponse;
 
