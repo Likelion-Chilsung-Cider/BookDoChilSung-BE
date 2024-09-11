@@ -1,5 +1,6 @@
 package com.likelion.Bookdochilseong.domain.Book;
 
+import com.likelion.Bookdochilseong.domain.Book.dto.BookRequestDTO;
 import com.likelion.Bookdochilseong.domain.Book.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,7 @@ public class BookController {
 
     // 책 정보 추가
     @PostMapping("/api/book/addBookInfo")
-    public ResponseEntity<?> addBookInfo() {
-        return ResponseEntity.ok().body(bookService.addBookInfo(userSeq, readingStatus));
+    public ResponseEntity<?> addBookInfo(@RequestBody BookRequestDTO.AddBookInfo addBookInfo) {
+        return ResponseEntity.ok().body(bookService.addBookInfo(addBookInfo));
     }
 }
