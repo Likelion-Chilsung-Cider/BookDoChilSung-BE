@@ -1,4 +1,4 @@
-package com.likelion.Bookdochilseong.domain.tblBook.dto;
+package com.likelion.Bookdochilseong.domain.Book.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

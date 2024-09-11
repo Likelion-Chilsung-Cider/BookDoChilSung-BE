@@ -1,6 +1,6 @@
-package com.likelion.Bookdochilseong.domain.tblBook.service;
+package com.likelion.Bookdochilseong.domain.Book.service;
 
-import com.likelion.Bookdochilseong.domain.tblBook.dto.BookResponseDTO;
+import com.likelion.Bookdochilseong.domain.Book.dto.BookResponseDTO;
 import com.likelion.Bookdochilseong.global.response.ApiResponse;
 import com.likelion.Bookdochilseong.global.response.resEnum.SuccessCode;
 import lombok.RequiredArgsConstructor;
@@ -8,8 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -64,4 +62,6 @@ public class BookServiceImpl implements BookService {
         // TODO 성공 코드 수정
         return ApiResponse.SUCCESS(SuccessCode.CREATE_USER);
     }
+
+
 }
