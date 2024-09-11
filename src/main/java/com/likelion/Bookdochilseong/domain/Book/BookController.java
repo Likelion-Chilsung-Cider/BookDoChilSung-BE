@@ -30,4 +30,10 @@ public class BookController {
     ) {
         return ResponseEntity.ok().body(bookService.searchBookInfo(userSeq, readingStatus));
     }
+
+    // 책 정보 추가
+    @PostMapping("/api/book/addBookInfo")
+    public ResponseEntity<?> addBookInfo() {
+        return ResponseEntity.ok().body(bookService.addBookInfo(userSeq, readingStatus));
+    }
 }

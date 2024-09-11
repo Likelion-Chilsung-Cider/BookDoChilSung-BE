@@ -44,8 +44,7 @@ public class BookServiceImpl implements BookService {
         .block();
         log.info("알라딘 API 호출 완료");
 
-        // TODO 성공코드 수정
-        return ApiResponse.SUCCESS(SuccessCode.CREATE_USER, searchBookListDTO);
+        return ApiResponse.SUCCESS(SuccessCode.BOOK_LIST_FOUND, searchBookListDTO);
     }
 
     /**
@@ -58,10 +57,8 @@ public class BookServiceImpl implements BookService {
     public ApiResponse<?> searchBookInfo(Long userSeq, int readingStatus) {
         // 1. 독서 상태, 책 테이블 조인해서 데이터 조회 (userSeq or session) + readingStatus 조회조건 추가
         //List<ReadingStatusResponseDTO.SearchUserBookList> statusLists = readingStatusRepository.findByUserSeq(userSeq);
-        
+
         // TODO 성공 코드 수정
-        return ApiResponse.SUCCESS(SuccessCode.CREATE_USER);
+        return ApiResponse.SUCCESS(SuccessCode.USER_BOOK_LIST_FOUND);
     }
-
-
 }
