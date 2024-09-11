@@ -17,7 +17,7 @@ public class TblBook extends BaseEntity {
     @Id
     @Comment(value="구분자")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookSeq;
+    private Long book_seq;
     @Column
     private String title;
     @Column
@@ -27,7 +27,7 @@ public class TblBook extends BaseEntity {
     @Column
     private String author;
     @Column
-    private String bookCover;
+    private String book_cover;
     @Column
     private String isbn;
     @Column
