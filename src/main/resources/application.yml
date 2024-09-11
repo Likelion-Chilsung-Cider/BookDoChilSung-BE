@@ -12,6 +12,11 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  api:
+    book_search:
+      key: ${BOOKSEARCH_API_KEY}
+      url: ${BOOKSEARCH_API_URL}
   security:
     oauth2:
       client:
