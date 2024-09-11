@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class BookController {
     private final BookService bookService;
 
-    // 책 조회
+    // 책 정보 조회
     @GetMapping("/api/book/searchBook")
     public ResponseEntity<?> searchBook(
             @RequestParam(name = "title") String title,
