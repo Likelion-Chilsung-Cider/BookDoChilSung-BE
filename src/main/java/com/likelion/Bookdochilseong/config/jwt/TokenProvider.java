@@ -34,7 +34,7 @@ public class TokenProvider {
                 .setIssuer(jwtProperties.getIssuer()) //properties에서 설정한 값
                 .setIssuedAt(now) // 현재시간
                 .setExpiration(expiry) // expiry 변수값
-                .setSubject(user.getNickname()) // 유저 닉네임
+                .setSubject(user.getUId().toString()) // 유저 닉네임
                 .claim("id",user.getId()) // 클레임 id: 유저 ID
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey()) // 서명 : 비밀값과 함게 해시값을 hs256 방식으로 암호화
                 .compact();

@@ -47,7 +47,7 @@ public class WebSecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated()
                         .anyRequest().permitAll());
 
-        http.oauth2Login(oauth2 -> oauth2.loginPage("/api/login")
+        http.oauth2Login(oauth2 -> oauth2
                         .authorizationEndpoint(auth -> auth.authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()))
                         .userInfoEndpoint(user -> user.userService(oAuth2UserCustomService))
                         .successHandler(oAuth2SuccessHandler())

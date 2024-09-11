@@ -45,9 +45,9 @@ public class KakaoUserInfoResponseDTO {
     @NoArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
     public class KakaoAccount {
-        //닉네임 제공 동의 여부
-        @JsonProperty("profile_nickname_needs_agreement")
-        public Boolean isNickNameAgree;
+//        //닉네임 제공 동의 여부
+//        @JsonProperty("profile_nickname_needs_agreement")
+//        public Boolean isNickNameAgree;
 
         //프로필 사진 제공 동의 여부
         @JsonProperty("profile_image_needs_agreement")
@@ -66,10 +66,10 @@ public class KakaoUserInfoResponseDTO {
             @JsonProperty("nickname")
             public String nickName;
 
-            //닉네임이 기본 닉네임인지 여부
-            //true : 기본 닉네임, false : 사용자 등록
-            @JsonProperty("is_default_nickname")
-            public Boolean isDefaultNickName;
+//            //닉네임이 기본 닉네임인지 여부
+//            //true : 기본 닉네임, false : 사용자 등록
+//            @JsonProperty("is_default_nickname")
+//            public Boolean isDefaultNickName;
 
         }
     }

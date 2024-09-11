@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Map;
 
 import static com.likelion.Bookdochilseong.config.oauth.OAuth2SuccessHandler.REFRESH_TOKEN_DURATION;
 
@@ -153,6 +156,28 @@ public class KakaoService {
         return userInfo;
     }
 
+    public Map<String,Object> getUserInfo(String accessToken){
+        Map<String,Object> userInfo = WebClient.create(KAUTH_USER_URL_HOST)
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .scheme("https")
+                        .path("/v2/user/me")
+                        .build(true))
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken) // access token 인가
+                .header(HttpHeaders.CONTENT_TYPE, HttpHeaderValues.APPLICATION_X_WWW_FORM_URLENCODED.toString())
+                .retrieve()
+                //TODO : Custom Exception
+                .onStatus(HttpStatusCode::is4xxClientError, clientResponse -> Mono.error(new RuntimeException("Invalid Parameter")))
+                .onStatus(HttpStatusCode::is5xxServerError, clientResponse -> Mono.error(new RuntimeException("Internal Server Error")))
+                .bodyToMono(new ParameterizedTypeReference<Map<String,Object>>() {
+                })
+                .block();
+
+        log.info("[ Kakao Service ] Auth ID ---> {} ", userInfo.get("id"));
+        log.info("[ Kakao Service ] NickName ---> {} ", userInfo.get("properties"));
+        return userInfo;
+    }
+
     public AddUserResponseDTO KakaoUserLogin(KakaoUserInfoResponseDTO userInfo,HttpServletRequest request, HttpServletResponse response){
         Long uid = userInfo.getId();
         String nickname = userInfo.getKakaoAccount().getProfile().getNickName();
@@ -172,7 +197,9 @@ public class KakaoService {
         String refreshToken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);
         saveRefreshToken(user.getId(), refreshToken);
         addRefreshTokenToCookie(request, response, refreshToken);
-        return tokenProvider.generateToken(user,ACCESS_TOKEN_DURATION);
+        String accessToken = tokenProvider.generateToken(user,ACCESS_TOKEN_DURATION);
+        String targetUrl = getTargetUrl(accessToken);
+        return accessToken;
     }
 
     //생성된 리프레시 토큰을 전달받아 디비에 저장
