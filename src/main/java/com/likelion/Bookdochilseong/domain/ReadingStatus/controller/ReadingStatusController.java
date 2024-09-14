@@ -13,25 +13,27 @@ public class ReadingStatusController {
     private final ReadingStatusService readingStatusService;
 
     @PostMapping("/api/readingStatus/status")
-    public ResponseEntity<ReadingStatusResponseDto> createReadingStatus (ReadingStatusRequestDto readingStatusRequestDto) {
+    public ResponseEntity<ReadingStatusResponseDto> createReadingStatus (@RequestBody ReadingStatusRequestDto readingStatusRequestDto) {
         ReadingStatusResponseDto readingStatusResponseDto = readingStatusService.create(readingStatusRequestDto);
         return ResponseEntity.ok().body(readingStatusResponseDto);
     }
 
-    @PutMapping("/modStatus")
-    public ResponseEntity<ReadingStatusResponseDto> updateReadingStatus (ReadingStatusRequestDto readingStatusRequestDto) {
-        ReadingStatusResponseDto readingStatusResponseDto= readingStatusService.update(readingStatusRequestDto);
+    @PutMapping("/modStatus/{id}")
+    public ResponseEntity<ReadingStatusResponseDto> updateReadingStatus
+            (@PathVariable Long id,
+             @RequestBody ReadingStatusRequestDto readingStatusRequestDto) {
+        ReadingStatusResponseDto readingStatusResponseDto= readingStatusService.update(id, readingStatusRequestDto);
         return ResponseEntity.ok().body(readingStatusResponseDto);
     }
 
-    @GetMapping("/status")
-    public ResponseEntity<ReadingStatusResponseDto> getReadingStatus (Long id) {
+    @GetMapping("/status/{id}")
+    public ResponseEntity<ReadingStatusResponseDto> getReadingStatus (@PathVariable Long id) {
         ReadingStatusResponseDto responseDto = readingStatusService.get(id);
         return ResponseEntity.ok().body(responseDto);
     }
 
-    @DeleteMapping("/status")
-    public ResponseEntity<ReadingStatusResponseDto> deleteReadingStatus (Long id) {
+    @DeleteMapping("/status/{id}")
+    public ResponseEntity<ReadingStatusResponseDto> deleteReadingStatus (@PathVariable Long id) {
         readingStatusService.delete(id);
         return ResponseEntity.ok().build();
     }
