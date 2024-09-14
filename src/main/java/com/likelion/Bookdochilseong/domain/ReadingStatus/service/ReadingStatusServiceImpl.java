@@ -53,10 +53,10 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
 
     @Override
     @Transactional
-    public ReadingStatusResponseDto update(ReadingStatusRequestDto requestDto) {
+    public ReadingStatusResponseDto update(Long id ,ReadingStatusRequestDto requestDto) {
         // 사용자의 독서 상태를 업데이트합니다.
         TblUser tblUser = mypageService.getUser();
-        TblReadingStatus existingStatus = readingStatusRepository.findById(requestDto.getId())
+        TblReadingStatus existingStatus = readingStatusRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("독서 상태를 찾을 수 없습니다."));
 
         // 요청된 데이터로 독서 상태 업데이트
