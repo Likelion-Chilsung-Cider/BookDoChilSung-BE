@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,34 +20,36 @@ public class TblReadingStatus extends BaseEntity {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    private int readingStatus;
+    @Column(name = "readingStatus_id")
+    private int tblReadingStatus;
 
     @ManyToOne
-    @JoinColumn(name = "book_id" , nullable = false)
+    @JoinColumn(name = "book_id", nullable = false)
     private TblBook tblBook;
 
     @ManyToOne
-    @JoinColumn(name = "user_id" , nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private TblUser tblUser;
 
-    @OneToMany(mappedBy = "readingStatus", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "tblReadingStatus", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TblReview> reviews;
 
-    @OneToOne(mappedBy = "readingStatus", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
+    @JoinColumn(name = "tblRating_id")
     private TblRating tblRating;
 
     @Builder
-    public TblReadingStatus(TblUser tblUser, TblBook tblBook, LocalDate startDate, LocalDate endDate, int readingStatus) {
+    public TblReadingStatus(TblUser tblUser, TblBook tblBook, LocalDate startDate, LocalDate endDate, int tblReadingStatus) {
         this.tblUser = tblUser;
         this.tblBook = tblBook;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.readingStatus = readingStatus;
+        this.tblReadingStatus = tblReadingStatus;
     }
 
 
     public void updateStatus(int readingStatus, LocalDate endDate) {
-        this.readingStatus = readingStatus;
+        this.tblReadingStatus = readingStatus;
         this.endDate = endDate;
     }
 

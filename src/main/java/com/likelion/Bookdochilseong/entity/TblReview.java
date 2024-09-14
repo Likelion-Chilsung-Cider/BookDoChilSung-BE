@@ -20,7 +20,7 @@ public class TblReview extends BaseEntity {
     @JoinColumn(name = "reading_status_id", nullable = false)
     private TblReadingStatus tblReadingStatus;
 
-    @Column(nullable = false, length = 500)
+    @Column(name = "comment",nullable = false, length = 500)
     private String comment;
 
     @Builder

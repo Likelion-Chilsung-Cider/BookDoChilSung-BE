@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class ReadingStatusServiceImpl implements ReadingStatusService {
@@ -37,7 +35,7 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
                 .tblBook(tblBook)
                 .startDate(requestDto.getStartDate())
                 .endDate(requestDto.getEndDate())
-                .readingStatus(requestDto.getStatus())
+                .tblReadingStatus(requestDto.getStatus())
                 .build();
 
 
@@ -47,7 +45,7 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
                 .bookId(saved.getTblBook().getBook_seq())
                 .startDate(saved.getStartDate())
                 .endDate(saved.getEndDate())
-                .status(saved.getReadingStatus())
+                .status(saved.getTblReadingStatus())
                 .build();
     }
 
@@ -69,7 +67,7 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
                 .bookId(updatedStatus.getTblBook().getBook_seq())
                 .startDate(updatedStatus.getStartDate())
                 .endDate(updatedStatus.getEndDate())
-                .status(updatedStatus.getReadingStatus())
+                .status(updatedStatus.getTblReadingStatus())
                 .build();
     }
 
@@ -100,7 +98,7 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
                 .bookId(readingStatus.getTblBook().getBook_seq())
                 .startDate(readingStatus.getStartDate())
                 .endDate(readingStatus.getEndDate())
-                .status(readingStatus.getReadingStatus())
+                .status(readingStatus.getTblReadingStatus())
                 .build();
     }
 }

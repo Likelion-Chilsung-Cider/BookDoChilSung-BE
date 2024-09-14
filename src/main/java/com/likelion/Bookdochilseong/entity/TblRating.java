@@ -4,21 +4,23 @@ import com.likelion.Bookdochilseong.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class TblRating extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "rating")
     private int rating;
 
 
-    @ManyToOne
-    @JoinColumn(name = "reading_status_id", nullable = false)
+    @OneToOne(mappedBy = "tblRating")
     private TblReadingStatus tblReadingStatus;
 
     @Builder
