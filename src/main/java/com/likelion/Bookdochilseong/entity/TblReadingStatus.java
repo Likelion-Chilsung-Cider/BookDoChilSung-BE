@@ -4,11 +4,14 @@ import com.likelion.Bookdochilseong.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class TblReadingStatus extends BaseEntity {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -28,9 +31,18 @@ public class TblReadingStatus extends BaseEntity {
     private TblUser tblUser;
 
     @Builder
-    public TblReadingStatus(LocalDate startDate, LocalDate endDate, int readingStatus) {
+    public TblReadingStatus(TblUser tblUser, TblBook tblBook, LocalDate startDate, LocalDate endDate, int readingStatus) {
+        this.tblUser = tblUser;
+        this.tblBook = tblBook;
         this.startDate = startDate;
         this.endDate = endDate;
         this.readingStatus = readingStatus;
     }
+
+
+    public void updateStatus(int readingStatus, LocalDate endDate) {
+        this.readingStatus = readingStatus;
+        this.endDate = endDate;
+    }
+
 }
