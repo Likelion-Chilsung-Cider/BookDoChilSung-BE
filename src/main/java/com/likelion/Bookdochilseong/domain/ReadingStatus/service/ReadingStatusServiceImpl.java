@@ -42,7 +42,7 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
         TblReadingStatus saved = readingStatusRepository.save(readingStatus);
         return ReadingStatusResponseDto.builder()
                 .id(saved.getId())
-                .bookId(saved.getTblBook().getBook_seq())
+                .bookId(saved.getTblBook().getId())
                 .startDate(saved.getStartDate())
                 .endDate(saved.getEndDate())
                 .status(saved.getTblReadingStatus())
@@ -64,7 +64,7 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
 
         return ReadingStatusResponseDto.builder()
                 .id(updatedStatus.getId())
-                .bookId(updatedStatus.getTblBook().getBook_seq())
+                .bookId(updatedStatus.getTblBook().getId())
                 .startDate(updatedStatus.getStartDate())
                 .endDate(updatedStatus.getEndDate())
                 .status(updatedStatus.getTblReadingStatus())
@@ -95,7 +95,7 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
 
         return ReadingStatusResponseDto.builder()
                 .id(readingStatus.getId())
-                .bookId(readingStatus.getTblBook().getBook_seq())
+                .bookId(readingStatus.getTblBook().getId())
                 .startDate(readingStatus.getStartDate())
                 .endDate(readingStatus.getEndDate())
                 .status(readingStatus.getTblReadingStatus())

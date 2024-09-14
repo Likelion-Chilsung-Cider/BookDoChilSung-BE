@@ -29,7 +29,7 @@ public class RatingServiceImpl implements RatingService {
     public RatingResponseDto create(RatingRequestDto requestDto) {
         TblUser tblUser = mypageService.getUser();
         // User와 Book ID로 ReadingStatus 찾기
-        TblReadingStatus readingStatus = readingStatusRepository.findByTblBook_BookSeqAndTblUser_Id(
+        TblReadingStatus readingStatus = readingStatusRepository.findByTblBook_IdAndTblUser_Id(
                         requestDto.getBookId(), tblUser.getId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 책의 독서 상태를 찾을 수 없습니다."));
 

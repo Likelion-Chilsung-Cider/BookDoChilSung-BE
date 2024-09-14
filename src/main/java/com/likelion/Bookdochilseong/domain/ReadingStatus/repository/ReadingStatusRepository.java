@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface ReadingStatusRepository extends JpaRepository<TblReadingStatus, Long> {
-    Optional<TblReadingStatus> findByTblBook_BookSeqAndTblUser_Id(Long book_seq, Long userId);
+    Optional<TblReadingStatus> findByTblBook_IdAndTblUser_Id(Long bookId, Long userId);
 
 }
