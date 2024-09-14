@@ -18,7 +18,7 @@ public class ReadingStatusController {
         return ResponseEntity.ok().body(readingStatusResponseDto);
     }
 
-    @PutMapping("/modStatus/{id}")
+    @PutMapping("/Status/{id}")
     public ResponseEntity<ReadingStatusResponseDto> updateReadingStatus
             (@PathVariable Long id,
              @RequestBody ReadingStatusRequestDto readingStatusRequestDto) {

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,6 +30,12 @@ public class TblReadingStatus extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id" , nullable = false)
     private TblUser tblUser;
+
+    @OneToMany(mappedBy = "readingStatus", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TblReview> reviews;
+
+    @OneToOne(mappedBy = "readingStatus", cascade = CascadeType.ALL, orphanRemoval = true)
+    private TblRating tblRating;
 
     @Builder
     public TblReadingStatus(TblUser tblUser, TblBook tblBook, LocalDate startDate, LocalDate endDate, int readingStatus) {
