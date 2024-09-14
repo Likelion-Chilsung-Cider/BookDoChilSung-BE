@@ -7,7 +7,7 @@ public interface ReadingStatusService {
     //crud
 
     ReadingStatusResponseDto create(ReadingStatusRequestDto readingStatusRequestDto);
-    ReadingStatusResponseDto update(ReadingStatusRequestDto readingStatusRequestDto);
+    ReadingStatusResponseDto update(Long id , ReadingStatusRequestDto readingStatusRequestDto);
     void delete(Long id);
     ReadingStatusResponseDto get(Long id);
 
