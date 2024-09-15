@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
+import java.util.List;
+
 @Getter
 @Builder
 @Entity
@@ -17,7 +19,7 @@ public class TblBook extends BaseEntity {
     @Id
     @Comment(value="구분자")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long book_seq;
+    private Long id;
     @Column
     private String title;
     @Column
@@ -32,4 +34,7 @@ public class TblBook extends BaseEntity {
     private String isbn;
     @Column
     private int pages;
+
+    @OneToMany(mappedBy = "tblBook", cascade = CascadeType.REMOVE)
+    private List<TblReadingStatus> readingStatuses;
 }
