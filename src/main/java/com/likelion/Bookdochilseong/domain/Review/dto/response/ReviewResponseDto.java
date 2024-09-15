@@ -9,11 +9,11 @@ import lombok.Setter;
 public class ReviewResponseDto {
     private Long id;
     private Long readingStatusId;
-    private String comment;
+    private String content;
 
-    public ReviewResponseDto(Long id, Long readingStatusId, String comment) {
+    public ReviewResponseDto(Long id, Long readingStatusId, String content) {
         this.id = id;
         this.readingStatusId = readingStatusId;
-        this.comment = comment;
+        this.content = content;
     }
 }

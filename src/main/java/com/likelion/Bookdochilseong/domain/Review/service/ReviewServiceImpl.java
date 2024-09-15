@@ -34,11 +34,11 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Transactional
-    public ReviewResponseDto updateReview(Long reviewId, String comment) {
+    public ReviewResponseDto updateReview(Long reviewId, ReviewRequestDto requestDto) {
         TblReview review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid review ID"));
 
-        review.updateComment(comment);
+        review.updateComment(requestDto.getContent());
         return new ReviewResponseDto(review.getId(), review.getTblReadingStatus().getId(), review.getComment());
     }
 
