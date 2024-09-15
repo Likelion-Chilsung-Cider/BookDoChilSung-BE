@@ -31,6 +31,9 @@ public class TblUser extends BaseEntity implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @OneToMany(mappedBy = "tblUser", cascade = CascadeType.REMOVE)
+    private List<TblReadingStatus> readingStatuses;
+
     @Builder
     public TblUser(String nickname, String password,Long uId){
         this.nickname = nickname;

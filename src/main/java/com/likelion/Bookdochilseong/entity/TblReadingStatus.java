@@ -20,7 +20,7 @@ public class TblReadingStatus extends BaseEntity {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    @Column(name = "readingStatus_id")
+    @Column(name = "tblReadingStatus")
     private int tblReadingStatus;
 
     @ManyToOne
@@ -31,11 +31,10 @@ public class TblReadingStatus extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private TblUser tblUser;
 
-    @OneToMany(mappedBy = "tblReadingStatus", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "tblReadingStatus", cascade = CascadeType.ALL)
     private List<TblReview> reviews;
 
-    @OneToOne
-    @JoinColumn(name = "tblRating_id")
+    @OneToOne(mappedBy = "tblReadingStatus", cascade = CascadeType.ALL)
     private TblRating tblRating;
 
     @Builder

@@ -17,7 +17,7 @@ public class TblReview extends BaseEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "reading_status_id", nullable = false)
+    @JoinColumn(name = "tblReadingStatus_id", nullable = false)
     private TblReadingStatus tblReadingStatus;
 
     @Column(name = "comment",nullable = false, length = 500)

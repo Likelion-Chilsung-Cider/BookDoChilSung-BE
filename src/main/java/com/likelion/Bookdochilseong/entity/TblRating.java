@@ -20,7 +20,8 @@ public class TblRating extends BaseEntity {
     private int rating;
 
 
-    @OneToOne(mappedBy = "tblRating")
+    @OneToOne
+    @JoinColumn(name = "tblReadingStatus_id", nullable = false)  // 외래 키 컬럼명 설정
     private TblReadingStatus tblReadingStatus;
 
     @Builder
