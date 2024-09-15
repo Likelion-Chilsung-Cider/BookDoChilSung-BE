@@ -18,7 +18,7 @@ public class ReadingStatusController {
         return ResponseEntity.ok().body(readingStatusResponseDto);
     }
 
-    @PutMapping("/Status/{id}")
+    @PutMapping("/api/readingStatus/status/{id}")
     public ResponseEntity<ReadingStatusResponseDto> updateReadingStatus
             (@PathVariable Long id,
              @RequestBody ReadingStatusRequestDto readingStatusRequestDto) {
@@ -26,13 +26,13 @@ public class ReadingStatusController {
         return ResponseEntity.ok().body(readingStatusResponseDto);
     }
 
-    @GetMapping("/status/{id}")
+    @GetMapping("/api/readingStatus/status/{id}")
     public ResponseEntity<ReadingStatusResponseDto> getReadingStatus (@PathVariable Long id) {
         ReadingStatusResponseDto responseDto = readingStatusService.get(id);
         return ResponseEntity.ok().body(responseDto);
     }
 
-    @DeleteMapping("/status/{id}")
+    @DeleteMapping("/api/readingStatus/status/{id}")
     public ResponseEntity<ReadingStatusResponseDto> deleteReadingStatus (@PathVariable Long id) {
         readingStatusService.delete(id);
         return ResponseEntity.ok().build();
