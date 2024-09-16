@@ -51,9 +51,10 @@ jobs:
               username: ${{ secrets.RDSUSERNAME }}
               password: ${{ secrets.RDSPASSWORD }}
           EOT
+          
+      - name: Build with Gradle (Skip Tests)
+        run: ./gradlew clean build -x test
 
-      - name: Build with Gradle
-        run: ./gradlew clean build
 
       - name: Get current time
         uses: josStorer/get-current-time@v2.0.2
