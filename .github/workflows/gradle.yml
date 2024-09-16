@@ -48,7 +48,7 @@ jobs:
 
     - name: Test RDS connection
       run: |
-        nc -zv ${RDS_HOSTNAME} ${RDS_PORT}
+        nc -zv ${RDSHOSTNAME} ${RDSPORT}
 
 
     - name: Build with Gradle
