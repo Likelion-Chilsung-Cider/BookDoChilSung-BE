@@ -34,15 +34,12 @@ jobs:
         cache: 'gradle'
         
     - name: Set yml file 
-      uses: microsoft/variable-substitution@v1
-      with:
-        files: ${{ env.RESOURCE_PATH }} 
-      env:
-        spring.datasource.url: ${{ secrets.RDSHOST }} 
-        spring.datasource.username: ${{ secrets.RDSUSERNAME }} 
-        spring.datasource.password: ${{ secrets.RDSPASSWORD }} 
-        spring.datasource.name: ${{ secrets.RDSNAME }} 
-        spring.datasource.port: ${{ secrets.RDSPORT }} 
+      run: |
+        echo "RDS_HOSTNAME=${{ secrets.RDSHOST }}" >> $GITHUB_ENV
+        echo "RDS_NAME=${{ secrets.RDSNAME }}" >> $GITHUB_ENV
+        echo "RDS_USERNAME=${{ secrets.RDSUSERNAME }}" >> $GITHUB_ENV
+        echo "RDS_PASSWORD=${{ secrets.RDSPASSWORD }}" >> $GITHUB_ENV
+        echo "RDS_PORT=${{ secrets.RDSPORT }}" >> $GITHUB_ENV
 
         
         
