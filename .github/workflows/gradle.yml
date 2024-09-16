@@ -49,8 +49,13 @@ jobs:
               password: ${RDSPASSWORD}
           EOT
 
-      - name: Build with Gradle
-        run: ./gradlew clean build
+      - name: 환경변수 설정
+        run: echo "${{ secrets.MY_APPLICATION_YML}}" > ./src/main/resources/application.yml
+        working-directory: ./server/linode-github-action-test
+
+      - name: build # 경로를 직접 설정하여 빌드 명령을 내려준다.
+        run: /root/actions-runner/_work/githubActionTutorial/githubActionTutorial/server/linode-github-action-test/gradlew build
+        working-directory: ./server/linode-github-action-test
 
       - name: Get current time
         uses: josStorer/get-current-time@v2.0.2
