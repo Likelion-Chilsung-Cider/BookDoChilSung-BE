@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/bookdochilseong?serverTimezone=UTC&characterEncoding=UTF-8
-    username: bookdochilseong
-    password: bookdochilseong
+    url: jdbc:mysql://${HOSTNAME}:3306/${RDBNAME}?serverTimezone=UTC&characterEncoding=UTF-8
+    username: ${USERNAME}
+    password: ${PASSWORD}
   jpa:
     hibernate:
 #      ddl-auto: create  #데이터 최초 상태로 초기화
