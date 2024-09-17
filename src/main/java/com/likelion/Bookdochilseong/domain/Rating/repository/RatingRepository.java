@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface RatingRepository extends JpaRepository<TblRating, Long> {
-
+    TblRating findByTblReadingStatus_Id(Long reading_status);
 }
 

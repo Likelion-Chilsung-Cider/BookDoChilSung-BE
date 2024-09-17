@@ -1,6 +1,5 @@
 package com.likelion.Bookdochilseong.domain.Book.service;
 
-import com.likelion.Bookdochilseong.domain.Book.dto.BookRequestDTO;
 import com.likelion.Bookdochilseong.global.response.ApiResponse;
 
 public interface BookService {
