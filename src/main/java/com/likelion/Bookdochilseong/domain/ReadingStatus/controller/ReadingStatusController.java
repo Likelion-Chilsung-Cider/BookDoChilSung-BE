@@ -1,6 +1,7 @@
 package com.likelion.Bookdochilseong.domain.ReadingStatus.controller;
 
 import com.likelion.Bookdochilseong.domain.ReadingStatus.dto.request.ReadingStatusRequestDto;
+import com.likelion.Bookdochilseong.domain.ReadingStatus.dto.request.UpdateReadingStatusRequestDto;
 import com.likelion.Bookdochilseong.domain.ReadingStatus.dto.response.ReadingStatusResponseDto;
 import com.likelion.Bookdochilseong.domain.ReadingStatus.service.ReadingStatusService;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,8 @@ public class ReadingStatusController {
     @PutMapping("/api/readingStatus/status/{id}")
     public ResponseEntity<ReadingStatusResponseDto> updateReadingStatus
             (@PathVariable Long id,
-             @RequestBody ReadingStatusRequestDto readingStatusRequestDto) {
-        ReadingStatusResponseDto readingStatusResponseDto= readingStatusService.update(id, readingStatusRequestDto);
+             @RequestBody UpdateReadingStatusRequestDto requestDto) {
+        ReadingStatusResponseDto readingStatusResponseDto= readingStatusService.update(id, requestDto);
         return ResponseEntity.ok().body(readingStatusResponseDto);
     }
 

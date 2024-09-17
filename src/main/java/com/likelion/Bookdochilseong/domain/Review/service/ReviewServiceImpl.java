@@ -2,6 +2,7 @@ package com.likelion.Bookdochilseong.domain.Review.service;
 
 import com.likelion.Bookdochilseong.domain.ReadingStatus.repository.ReadingStatusRepository;
 import com.likelion.Bookdochilseong.domain.Review.dto.request.ReviewRequestDto;
+import com.likelion.Bookdochilseong.domain.Review.dto.request.UpdateReviewRequestDto;
 import com.likelion.Bookdochilseong.domain.Review.dto.response.ReviewResponseDto;
 import com.likelion.Bookdochilseong.domain.Review.repository.ReviewRepository;
 import com.likelion.Bookdochilseong.entity.TblReadingStatus;
@@ -34,7 +35,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Transactional
-    public ReviewResponseDto updateReview(Long reviewId, ReviewRequestDto requestDto) {
+    public ReviewResponseDto updateReview(Long reviewId, UpdateReviewRequestDto requestDto) {
         TblReview review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid review ID"));
 

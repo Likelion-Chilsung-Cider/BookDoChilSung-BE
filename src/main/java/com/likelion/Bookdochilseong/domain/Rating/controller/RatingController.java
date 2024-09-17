@@ -1,6 +1,7 @@
 package com.likelion.Bookdochilseong.domain.Rating.controller;
 
 import com.likelion.Bookdochilseong.domain.Rating.dto.request.RatingRequestDto;
+import com.likelion.Bookdochilseong.domain.Rating.dto.request.UpdateRatingRequestDto;
 import com.likelion.Bookdochilseong.domain.Rating.dto.response.RatingResponseDto;
 import com.likelion.Bookdochilseong.domain.Rating.service.RatingService;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +23,13 @@ public class RatingController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RatingResponseDto> updateRating(@PathVariable Long id, @RequestBody RatingRequestDto requestDto) {
+    public ResponseEntity<RatingResponseDto> updateRating(@PathVariable Long id, @RequestBody UpdateRatingRequestDto requestDto) {
         RatingResponseDto responseDto = ratingService.update(id, requestDto);
         return ResponseEntity.ok(responseDto);
     }
+
+
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRating(@PathVariable Long id) {

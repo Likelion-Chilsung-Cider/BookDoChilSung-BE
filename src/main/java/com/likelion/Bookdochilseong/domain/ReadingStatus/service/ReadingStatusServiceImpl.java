@@ -2,6 +2,7 @@ package com.likelion.Bookdochilseong.domain.ReadingStatus.service;
 
 import com.likelion.Bookdochilseong.domain.Book.BookRepository;
 import com.likelion.Bookdochilseong.domain.ReadingStatus.dto.request.ReadingStatusRequestDto;
+import com.likelion.Bookdochilseong.domain.ReadingStatus.dto.request.UpdateReadingStatusRequestDto;
 import com.likelion.Bookdochilseong.domain.ReadingStatus.dto.response.ReadingStatusResponseDto;
 import com.likelion.Bookdochilseong.domain.ReadingStatus.repository.ReadingStatusRepository;
 import com.likelion.Bookdochilseong.domain.User.repository.UserRepository;
@@ -88,7 +89,7 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
 
     @Override
     @Transactional
-    public ReadingStatusResponseDto update(Long id ,ReadingStatusRequestDto requestDto) {
+    public ReadingStatusResponseDto update(Long id , UpdateReadingStatusRequestDto requestDto) {
         // 사용자의 독서 상태를 업데이트합니다.
         TblUser tblUser = mypageService.getUser();
         TblReadingStatus existingStatus = readingStatusRepository.findById(id)

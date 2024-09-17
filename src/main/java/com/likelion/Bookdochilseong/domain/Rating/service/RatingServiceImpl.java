@@ -2,6 +2,7 @@ package com.likelion.Bookdochilseong.domain.Rating.service;
 
 import com.likelion.Bookdochilseong.domain.Book.BookRepository;
 import com.likelion.Bookdochilseong.domain.Rating.dto.request.RatingRequestDto;
+import com.likelion.Bookdochilseong.domain.Rating.dto.request.UpdateRatingRequestDto;
 import com.likelion.Bookdochilseong.domain.Rating.dto.response.RatingResponseDto;
 import com.likelion.Bookdochilseong.domain.Rating.repository.RatingRepository;
 import com.likelion.Bookdochilseong.domain.ReadingStatus.repository.ReadingStatusRepository;
@@ -50,7 +51,7 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     @Transactional
-    public RatingResponseDto update(Long id, RatingRequestDto requestDto) {
+    public RatingResponseDto update(Long id, UpdateRatingRequestDto requestDto) {
         TblRating rating = ratingRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 평점을 찾을 수 없습니다."));
 

@@ -2,6 +2,7 @@ package com.likelion.Bookdochilseong.domain.Review.controller;
 
 import com.likelion.Bookdochilseong.domain.Review.dto.request.ReviewRequestDto;
 import com.likelion.Bookdochilseong.domain.Review.dto.request.ReviewRequestDto;
+import com.likelion.Bookdochilseong.domain.Review.dto.request.UpdateReviewRequestDto;
 import com.likelion.Bookdochilseong.domain.Review.dto.response.ReviewResponseDto;
 import com.likelion.Bookdochilseong.domain.Review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class ReviewController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ReviewResponseDto> updateReview(@PathVariable Long id,@RequestBody ReviewRequestDto requestDto) {
+    public ResponseEntity<ReviewResponseDto> updateReview(@PathVariable Long id,@RequestBody UpdateReviewRequestDto requestDto) {
         return ResponseEntity.ok(reviewService.updateReview(id, requestDto));
     }
 
