@@ -5,7 +5,6 @@ import com.likelion.Bookdochilseong.domain.ReadingStatus.dto.response.ReadingSta
 
 public interface ReadingStatusService {
     //crud
-
     ReadingStatusResponseDto create(ReadingStatusRequestDto readingStatusRequestDto);
     ReadingStatusResponseDto update(Long id , ReadingStatusRequestDto readingStatusRequestDto);
     void delete(Long id);

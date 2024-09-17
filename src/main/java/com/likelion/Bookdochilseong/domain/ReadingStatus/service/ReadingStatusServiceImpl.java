@@ -10,9 +10,13 @@ import com.likelion.Bookdochilseong.entity.TblBook;
 import com.likelion.Bookdochilseong.entity.TblReadingStatus;
 import com.likelion.Bookdochilseong.entity.TblUser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ReadingStatusServiceImpl implements ReadingStatusService {
@@ -22,12 +26,45 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
     private final UserRepository userRepository;
     private final MypageService mypageService;
 
+    /**
+     * 책 정보 추가
+     * @param addBookInfo
+     */
+    @Transactional
+    public Long addBookInfo(ReadingStatusRequestDto addBookInfo) {
+        log.info("책 정보 추가");
+        // 1. 동일한 ISBN이 등록되어있는지 확인
+        Optional<TblBook> isbnInfo = Optional.ofNullable(bookRepository.findByIsbn(addBookInfo.getIsbn()));
+
+        // 2. 없으면 신규 책 등록
+        if (isbnInfo.isEmpty()) {
+            TblBook bookInfo = TblBook.builder()
+                    .title(addBookInfo.getTitle())
+                    .description(addBookInfo.getDescription())
+                    .publisher(addBookInfo.getPublisher())
+                    .author(addBookInfo.getAuthor())
+                    .isbn(addBookInfo.getIsbn())
+                    .pages(addBookInfo.getPages())
+                    .book_cover(addBookInfo.getBook_cover())
+                    .build();
+            TblBook newBookInfo = bookRepository.save(bookInfo);
+            log.info("신규 책 정보 등록");
+            return newBookInfo.getId();
+        } else {
+            log.info("이미 등록되어 있는 책");
+            return isbnInfo.get().getId();
+        }
+    }
+
     @Override
     @Transactional
     public ReadingStatusResponseDto create(ReadingStatusRequestDto requestDto) {
+        // 책 등록
+        Long bookId = addBookInfo(requestDto);
+        log.info("Book Id : ", bookId);
 
         TblUser tblUser = mypageService.getUser();
-        TblBook tblBook = bookRepository.findById(requestDto.getBookId())
+        TblBook tblBook = bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalArgumentException("책을 찾을 수 없습니다."));
 
         TblReadingStatus readingStatus = TblReadingStatus.builder()
