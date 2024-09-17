@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.util.List;
 
 public class BookResponseDTO {
@@ -32,5 +33,27 @@ public class BookResponseDTO {
         private String isbn;             // isbn
         @JsonProperty("page")
         private int pages;               // 페이지 수
+    }
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class SearchUserBookListDTO{
+        private Long book_seq;
+//        private LocalDateTime createDate;
+//        private LocalDateTime updateDate;
+        private String author;
+        private String book_cover;
+        private String description;
+        private String isbn;
+        private Integer pages;
+        private String publisher;
+        private String title;
+        private Long user_id;
+        private int reading_status;
+        private int rating;
+        private Date start_date;
+        private Date end_date;
     }
 }
