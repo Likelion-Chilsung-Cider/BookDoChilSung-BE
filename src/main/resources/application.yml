@@ -23,7 +23,7 @@ spring:
         registration:
           kakao:
             client-id: d6acae5182521fee4e7186969165e210
-            redirect-uri: http://localhost:8080/main
+            redirect-uri: http://localhost:3000/
             authorization-grant-type: authorization_code
         provider:
           kakao:
