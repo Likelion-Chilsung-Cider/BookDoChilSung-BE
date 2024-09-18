@@ -28,9 +28,9 @@ import java.util.UUID;
 @Slf4j
 public class MypageService {
     private final UserRepository userRepository;
-//    private final AmazonS3 amazonS3;
-//    @Value("버킷이름")
-//    private String bucket;
+    private final AmazonS3 amazonS3;
+    @Value("bookdochilseong")
+    private String bucket;
     //유저 가져오기
     public TblUser getUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -60,29 +60,30 @@ public class MypageService {
         }
     }
 //    //프로필이미지 수정
-//    public String updateProfileImg(TblUser user, MultipartFile img) throws IOException{
-//        String imgUrl = upload(img);
-//        user.patchProfileImg(imgUrl);
-//        return imgUrl;
-//    }
-//
-//    //프로필이미지 s3에 저장
-//    public String upload(MultipartFile multipartFile) throws IOException {
-//        String originalFileName = multipartFile.getOriginalFilename();
-//        //UUID 추가
-//        String uuid = UUID.randomUUID().toString();
-//        String uniqueFileName = uuid + "_" + originalFileName.replaceAll("\\s","_");
-//
-//        //String fileName = dirName + "/" + uniqueFileName;
-//        log.info("fileName: " + uniqueFileName);
-//
-//        ObjectMetadata metadata = new ObjectMetadata();
-//        metadata.setContentLength(multipartFile.getSize());
-//        metadata.setContentType(multipartFile.getContentType());
-//
-//        amazonS3.putObject(bucket, uniqueFileName,multipartFile.getInputStream(), metadata);
-//        String imgUrl = amazonS3.getUrl(bucket, uniqueFileName).toString();
-//        return imgUrl;
-//    }
+    @Transactional
+    public String updateProfileImg(TblUser user, MultipartFile img) throws IOException{
+        String imgUrl = upload(img);
+        user.patchProfileImg(imgUrl);
+        return imgUrl;
+    }
+
+    //프로필이미지 s3에 저장
+    public String upload(MultipartFile multipartFile) throws IOException {
+        String originalFileName = multipartFile.getOriginalFilename();
+        //UUID 추가
+        String uuid = UUID.randomUUID().toString();
+        String uniqueFileName = uuid + "_" + originalFileName.replaceAll("\\s","_");
+
+        //String fileName = dirName + "/" + uniqueFileName;
+        log.info("fileName: " + uniqueFileName);
+
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(multipartFile.getSize());
+        metadata.setContentType(multipartFile.getContentType());
+
+        amazonS3.putObject(bucket, uniqueFileName,multipartFile.getInputStream(), metadata);
+        String imgUrl = amazonS3.getUrl(bucket, uniqueFileName).toString();
+        return imgUrl;
+    }
 
 }

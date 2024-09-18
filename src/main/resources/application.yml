@@ -38,7 +38,7 @@ jwt:
 cloud:
   aws:
     s3:
-      bucket: yoribogo
+      bucket: bookdochilseong
     credentials:
       access-key:
       secret-key:
