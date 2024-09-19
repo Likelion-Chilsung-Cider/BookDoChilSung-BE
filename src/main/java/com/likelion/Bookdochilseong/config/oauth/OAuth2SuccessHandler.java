@@ -44,9 +44,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         oAuth2UserInfo = new KakaoUserInfo(token.getPrincipal().getAttributes());
         Long providerId = Long.parseLong(oAuth2UserInfo.getUid());
         String name = oAuth2UserInfo.getName();
-        Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
-        OAuth2User oAuth2User = (OAuth2User) authentication1.getPrincipal();
-        System.out.println(oAuth2User.getAttributes().get("id"));
         log.info("유저 이름 : "+ name);
         log.info("유저 아이디 : " + Long.toString(providerId));
         TblUser existUser = userRepository.findByuId(providerId);
