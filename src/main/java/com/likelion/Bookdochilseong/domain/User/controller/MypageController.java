@@ -1,5 +1,6 @@
 package com.likelion.Bookdochilseong.domain.User.controller;
 
+import com.likelion.Bookdochilseong.domain.User.dto.ImgRequestDTO;
 import com.likelion.Bookdochilseong.domain.User.dto.MypageResponseDTO;
 import com.likelion.Bookdochilseong.domain.User.dto.NicknameRequestDTO;
 import com.likelion.Bookdochilseong.domain.User.repository.UserRepository;
@@ -40,11 +41,12 @@ public class MypageController {
         return ResponseEntity.ok().body(result);
     }
 //    //프로필이미지 수정
-//    @PostMapping("/api/mypage/img")
-//    public ResponseEntity<?> updateProfileImg(@AuthenticationPrincipal TblUser user, @RequestBody MultipartFile img) throws IOException {
-//        String imgUrl = mypageService.updateProfileImg(user,img);
-//        log.info(user.getNickname() + "님이 프로필 사진을 변경하셨습니다.");
-//        return ResponseEntity.ok().body(imgUrl);
-//    }
+    @PostMapping("/api/mypage/img")
+    public ResponseEntity<?> updateProfileImg(@ModelAttribute ImgRequestDTO imgRequestDTO) throws IOException {
+        TblUser user = mypageService.getUser();
+        String imgUrl = mypageService.updateProfileImg(user,imgRequestDTO.getImg());
+        log.info(user.getNickname() + "님이 프로필 사진을 변경하셨습니다.");
+        return ResponseEntity.ok().body(imgUrl);
+    }
 
 }
