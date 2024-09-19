@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -48,5 +49,11 @@ public class MypageController {
         log.info(user.getNickname() + "님이 프로필 사진을 변경하셨습니다.");
         return ResponseEntity.ok().body(imgUrl);
     }
-
+    //월별 통계량 조회
+    @GetMapping("/api/mypage/monthly")
+    public ResponseEntity<?> monthlyRecord(){
+        TblUser user = mypageService.getUser();
+        List<Integer> record = mypageService.monthlyBook(user);
+        return ResponseEntity.ok().body(record);
+    }
 }

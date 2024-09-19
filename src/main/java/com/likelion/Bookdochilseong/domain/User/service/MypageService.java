@@ -2,9 +2,11 @@ package com.likelion.Bookdochilseong.domain.User.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.likelion.Bookdochilseong.domain.ReadingStatus.repository.ReadingStatusRepository;
 import com.likelion.Bookdochilseong.domain.User.dto.MypageResponseDTO;
 import com.likelion.Bookdochilseong.domain.User.dto.NicknameRequestDTO;
 import com.likelion.Bookdochilseong.domain.User.repository.UserRepository;
+import com.likelion.Bookdochilseong.entity.TblReadingStatus;
 import com.likelion.Bookdochilseong.entity.TblUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,6 +35,7 @@ import java.util.UUID;
 public class MypageService {
     private final UserRepository userRepository;
     private final AmazonS3 amazonS3;
+    private final ReadingStatusRepository readingStatusRepository;
     @Value("bookdochilseong")
     private String bucket;
     //유저 가져오기
@@ -72,9 +76,16 @@ public class MypageService {
     }
 
     //월별 독서량 통계
-//    public List<String> monthlyBook(TblUser user){
-//
-//    }
+    public List<Integer> monthlyBook(TblUser user){
+        List<Integer> record = new ArrayList<>();
+        for(int i = 0 ;i < 5; i++){
+            Integer currentMonth = LocalDate.now().getMonthValue() - i;
+            Long countBook = readingStatusRepository.countBooksByUserIdAndEndDateInMonth(user.getId(), currentMonth);
+            Integer count = Integer.parseInt(countBook.toString());
+            record.add(count);
+        }
+        return record;
+    }
 
     //프로필이미지 s3에 저장
     public String upload(MultipartFile multipartFile) throws IOException {
