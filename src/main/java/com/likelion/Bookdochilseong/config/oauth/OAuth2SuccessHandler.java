@@ -63,19 +63,19 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             //액세스토큰 생성 -> 패스에 액세스 토큰 추가
             String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
             log.info("ACCESS_TOKEN : " + accessToken);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            Map<String, String> tokens = new HashMap<>();
-            tokens.put("accessToken", accessToken);
-            ObjectMapper objectMapper = new ObjectMapper();
-            String responseBody = objectMapper.writeValueAsString(tokens);
-            response.getWriter().write(responseBody);
-            response.getWriter().flush();
-            //String targetUrl = getTargetUrl(accessToken);
+//            response.setContentType("application/json");
+//            response.setCharacterEncoding("UTF-8");
+//            Map<String, String> tokens = new HashMap<>();
+//            tokens.put("accessToken", accessToken);
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            String responseBody = objectMapper.writeValueAsString(tokens);
+//            response.getWriter().write(responseBody);
+//            response.getWriter().flush();
+            String targetUrl = getTargetUrl(accessToken);
             //인증 관련 설정값, 쿠키 제거
             //clearAuthenticationAttributes(request, response);
             //리다이렉트
-            //getRedirectStrategy().sendRedirect(request, response, targetUrl);
+            getRedirectStrategy().sendRedirect(request, response, targetUrl);
         } else{
             log.info("기존 유저");
             user = existUser;
@@ -86,19 +86,19 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             //액세스토큰 생성 -> 패스에 액세스 토큰 추가
             String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
             log.info("ACCESS_TOKEN : " + accessToken);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            Map<String, String> tokens = new HashMap<>();
-            tokens.put("accessToken", accessToken);
-            ObjectMapper objectMapper = new ObjectMapper();
-            String responseBody = objectMapper.writeValueAsString(tokens);
-            response.getWriter().write(responseBody);
-            response.getWriter().flush();
-            //String targetUrl = getTargetUrl(accessToken);
+//            response.setContentType("application/json");
+//            response.setCharacterEncoding("UTF-8");
+//            Map<String, String> tokens = new HashMap<>();
+//            tokens.put("accessToken", accessToken);
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            String responseBody = objectMapper.writeValueAsString(tokens);
+//            response.getWriter().write(responseBody);
+//            response.getWriter().flush();
+            String targetUrl = getTargetUrl(accessToken);
             //인증 관련 설정값, 쿠키 제거
             //clearAuthenticationAttributes(request, response);
             //리다이렉트
-            //getRedirectStrategy().sendRedirect(request, response, targetUrl);
+            getRedirectStrategy().sendRedirect(request, response, targetUrl);
         }
     }
 //    @Override
@@ -143,7 +143,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     //액세스 토큰을 패스에 추가
     private String getTargetUrl(String token){
         return UriComponentsBuilder.fromUriString(REDIRECT_PATH)
-                //.queryParam("token", token)
+                .queryParam("token", token)
                 .build()
                 .toUriString();
     }
