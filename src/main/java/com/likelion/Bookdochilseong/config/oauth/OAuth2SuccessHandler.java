@@ -28,11 +28,11 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
     public static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(14);
     public static final Duration ACCESS_TOKEN_DURATION = Duration.ofDays(1);
-    public static final String REDIRECT_PATH = "/api/book/searchBookInfo" ;
+    public static final String REDIRECT_PATH = "/" ;
 
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
-    private final OAuth2AuthorizationRequestBasedOnCookieRepository authorizationRequestRepository;
+    //private final OAuth2AuthorizationRequestBasedOnCookieRepository authorizationRequestRepository;
     private final UserRepository userRepository;
     private OAuth2UserInfo oAuth2UserInfo = null;
 
@@ -44,31 +44,43 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Long providerId = Long.parseLong(oAuth2UserInfo.getUid());
         String name = oAuth2UserInfo.getName();
 
-        TblUser existUser = userRepository.findByuId(providerId).get();
+        TblUser existUser = userRepository.findByuId(providerId);
         TblUser user;
 
         if (existUser == null){
             log.info("신규유저 입니다.");
             user = new TblUser(name, providerId);
             userRepository.save(user);
+            log.info("유저 이름 : ",name);
+            log.info("유저 id : ", providerId);
+            //리프레시 토큰 생성 -> 저장 -> 쿠키에 저장
+            String refreshToken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);
+            saveRefreshToken(user.getId(), refreshToken);
+            addRefreshTokenToCookie(request, response, refreshToken);
+            //액세스토큰 생성 -> 패스에 액세스 토큰 추가
+            String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
+            String targetUrl = getTargetUrl(accessToken);
+            //인증 관련 설정값, 쿠키 제거
+            //clearAuthenticationAttributes(request, response);
+            //리다이렉트
+            getRedirectStrategy().sendRedirect(request, response, targetUrl);
         } else{
             log.info("기존 유저");
             user = existUser;
+            log.info("유저 이름 : ",name);
+            log.info("유저 id : ", providerId);
+            //리프레시 토큰 생성 -> 저장 -> 쿠키에 저장
+            String refreshToken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);
+            saveRefreshToken(user.getId(), refreshToken);
+            addRefreshTokenToCookie(request, response, refreshToken);
+            //액세스토큰 생성 -> 패스에 액세스 토큰 추가
+            String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
+            String targetUrl = getTargetUrl(accessToken);
+            //인증 관련 설정값, 쿠키 제거
+            //clearAuthenticationAttributes(request, response);
+            //리다이렉트
+            getRedirectStrategy().sendRedirect(request, response, targetUrl);
         }
-
-        log.info("유저 이름 : ",name);
-        log.info("유저 id : ", providerId);
-        //리프레시 토큰 생성 -> 저장 -> 쿠키에 저장
-        String refreshToken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);
-        saveRefreshToken(user.getId(), refreshToken);
-        addRefreshTokenToCookie(request, response, refreshToken);
-        //액세스토큰 생성 -> 패스에 액세스 토큰 추가
-        String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
-        String targetUrl = getTargetUrl(accessToken);
-        //인증 관련 설정값, 쿠키 제거
-        clearAuthenticationAttributes(request, response);
-        //리다이렉트
-        getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 //    @Override
 //    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
@@ -103,11 +115,11 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         CookieUtil.addCookie(response,REFRESH_TOKEN_COOKIE_NAME,refreshToken, cookieMaxAge);
     }
 
-    //인증 관련 설정값, 쿠키 제거
-    private void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response){
-        super.clearAuthenticationAttributes(request);
-        authorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
-    }
+//    //인증 관련 설정값, 쿠키 제거
+//    private void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response){
+//        super.clearAuthenticationAttributes(request);
+//        authorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
+//    }
 
     //액세스 토큰을 패스에 추가
     private String getTargetUrl(String token){

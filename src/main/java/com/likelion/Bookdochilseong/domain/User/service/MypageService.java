@@ -35,8 +35,8 @@ public class MypageService {
     public TblUser getUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String uId = authentication.getName(); //uid
-        Optional<TblUser> user = userRepository.findByuId(Long.parseLong(uId));
-        return user.get();
+        TblUser user = userRepository.findByuId(Long.parseLong(uId));
+        return user;
     }
 
 

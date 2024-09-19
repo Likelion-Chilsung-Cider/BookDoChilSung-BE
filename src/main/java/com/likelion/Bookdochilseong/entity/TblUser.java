@@ -18,29 +18,29 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TblUser extends BaseEntity implements UserDetails {
+public class TblUser extends BaseEntity /*implements UserDetails*/ {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "uid")
+    @Column(name = "uid", nullable = false)
     private Long uId;
     @Column(name = "nickname", nullable = false , unique = true)
     private String nickname;
-    @Column(name = "profileImg")
-    private String profileImg;
-    @Column(name = "password")
-    private String password;
+    @Column(name = "profileImg", nullable = false)
+    private String profileImg = "123";
+//    @Column(name = "password",nullable = false)
+//    private String password;
 
     @OneToMany(mappedBy = "tblUser", cascade = CascadeType.REMOVE)
     private List<TblReadingStatus> readingStatuses;
 
-    @Builder
-    public TblUser(String nickname, String password,Long uId){
-        this.nickname = nickname;
-        this.password = password;
-        this.uId = uId;
-        this.profileImg = null;
-    }
+//    @Builder
+//    public TblUser(String nickname, String password,Long uId){
+//        this.nickname = nickname;
+//        this.password = password;
+//        this.uId = uId;
+//        this.profileImg = null;
+//    }
     public TblUser(String nickname, Long uid){
         this.nickname = nickname;
         this.uId = uid;
@@ -59,34 +59,34 @@ public class TblUser extends BaseEntity implements UserDetails {
         this.profileImg = imgUrl;
     }
     // UserDetails 오버라이드
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities(){
-        return List.of(new SimpleGrantedAuthority("user"));
-    }
-
-    @Override
-    public String getUsername(){
-        return nickname;
-    }
-
-    @Override
-    public String getPassword(){
-        return password;
-    }
-
-    @Override
-    public boolean isAccountNonExpired(){
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired(){
-        //패스워드가 만료되었는지 확인하는 로직
-        return true; //true -> 만료되지 않음
-    }
-    @Override
-    public boolean isEnabled(){
-        //계정이 사용가능한지 확인하는 로직
-        return true; //true -> 사용 가능
-    }
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities(){
+//        return List.of(new SimpleGrantedAuthority("user"));
+//    }
+//
+//    @Override
+//    public String getUsername(){
+//        return nickname;
+//    }
+//
+//    @Override
+//    public String getPassword(){
+//        return password;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired(){
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired(){
+//        //패스워드가 만료되었는지 확인하는 로직
+//        return true; //true -> 만료되지 않음
+//    }
+//    @Override
+//    public boolean isEnabled(){
+//        //계정이 사용가능한지 확인하는 로직
+//        return true; //true -> 사용 가능
+//    }
 }

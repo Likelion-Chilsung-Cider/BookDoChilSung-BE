@@ -3,10 +3,7 @@ package com.likelion.Bookdochilseong.config;
 import com.likelion.Bookdochilseong.config.jwt.TokenProvider;
 import com.likelion.Bookdochilseong.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.likelion.Bookdochilseong.config.oauth.OAuth2SuccessHandler;
-import com.likelion.Bookdochilseong.config.oauth.OAuth2UserCustomService;
 import com.likelion.Bookdochilseong.config.oauth.OAuthLoginFailureHandler;
-import com.likelion.Bookdochilseong.domain.User.repository.RefreshTokenRepository;
-import com.likelion.Bookdochilseong.domain.User.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,10 +27,10 @@ import java.util.List;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
-    private final OAuth2UserCustomService oAuth2UserCustomService;
+    //private final OAuth2UserCustomService oAuth2UserCustomService;
     private final TokenProvider tokenProvider;
-    private final RefreshTokenRepository refreshTokenRepository;
-    private final UserService userService;
+    //private final RefreshTokenRepository refreshTokenRepository;
+    //private final UserService userService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
     private final OAuthLoginFailureHandler oAuthLoginFailureHandler;
     //특정 http 요청에 대한 웹 기반 보안 구성
@@ -58,7 +55,7 @@ public class WebSecurityConfig {
                         .anyRequest().permitAll());
 
         http.oauth2Login(oauth2 -> oauth2
-                        .authorizationEndpoint(auth -> auth.authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()))
+                        /*.authorizationEndpoint(auth -> auth.authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()))*/
                         //.userInfoEndpoint(user -> user.userService(oAuth2UserCustomService))
                         .successHandler(oAuth2SuccessHandler)
                         .failureHandler(oAuthLoginFailureHandler)
@@ -105,9 +102,9 @@ public class WebSecurityConfig {
     public OAuth2AuthorizationRequestBasedOnCookieRepository oAuth2AuthorizationRequestBasedOnCookieRepository() {
         return new OAuth2AuthorizationRequestBasedOnCookieRepository();
     }
-    //패스워드 인코더로 사용할 빈 등록
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+//    //패스워드 인코더로 사용할 빈 등록
+//    @Bean
+//    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+//        return new BCryptPasswordEncoder();
+//    }
 }

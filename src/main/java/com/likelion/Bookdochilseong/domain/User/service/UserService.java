@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
 
-    public Long save(AddUserRequestDTO addUserRequestDTO){
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-
-        return userRepository.save(TblUser.builder()
-                .nickname(addUserRequestDTO.getNickname())
-                //.password(addUserRequestDTO.getPassword())
-                .build()).getId();
-    }
+//    public Long save(AddUserRequestDTO addUserRequestDTO){
+//        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//
+//        return userRepository.save(TblUser.builder()
+//                .nickname(addUserRequestDTO.getNickname())
+//                //.password(addUserRequestDTO.getPassword())
+//                .build()).getId();
+//    }
 
     public TblUser findById(Long userId){
         return userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Unexpected User"));
