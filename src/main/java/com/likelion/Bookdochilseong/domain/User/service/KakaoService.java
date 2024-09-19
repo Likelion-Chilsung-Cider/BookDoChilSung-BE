@@ -49,7 +49,7 @@ public class KakaoService {
     //private String clientId;
     //private String KAUTH_TOKEN_URL_HOST;
     //private String KAUTH_USER_URL_HOST;
-    @Value("http://localhost:8080/main")
+    @Value("http://bookdochilsung-env.ap-northeast-2.elasticbeanstalk.com/main")
     private String redirectUri;
 
     private final UserRepository userRepository;
@@ -57,7 +57,7 @@ public class KakaoService {
     public static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
     public static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(14);
     public static final Duration ACCESS_TOKEN_DURATION = Duration.ofDays(1);
-    public static final String REDIRECT_PATH = "/main" ;
+    public static final String REDIRECT_PATH = "http://bookdochilsung-env.ap-northeast-2.elasticbeanstalk.com/main" ;
     public static final String KAUTH_TOKEN_URL_HOST = "https://kauth.kakao.com";
     public static final String KAUTH_USER_URL_HOST = "https://kapi.kakao.com";
     public static final String clientId = "d6acae5182521fee4e7186969165e210";

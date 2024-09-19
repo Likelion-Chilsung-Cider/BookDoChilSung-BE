@@ -23,7 +23,7 @@ spring:
         registration:
           kakao:
             client-id: d6acae5182521fee4e7186969165e210
-            redirect-uri: http://localhost:3000/
+            redirect-uri: http://bookdochilsung-env.ap-northeast-2.elasticbeanstalk.com/main
             authorization-grant-type: authorization_code
         provider:
           kakao:
