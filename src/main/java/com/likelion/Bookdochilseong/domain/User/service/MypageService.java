@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +36,8 @@ public class MypageService {
     //유저 가져오기
     public TblUser getUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String uId = authentication.getName(); //uid
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String uId = userDetails.getUsername();
         TblUser user = userRepository.findByuId(Long.parseLong(uId));
         return user;
     }
