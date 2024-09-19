@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -52,7 +53,8 @@ public class KakaoLoginController {
         OAuth2User oAuth2User = new DefaultOAuth2User(authorities,getUserInfo,"id");
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(oAuth2User,null,oAuth2User.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        //return ResponseEntity.ok().body(authentication);
-        return ResponseEntity.ok().body(loginResult);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + loginResult.getAccessToken());
+        return ResponseEntity.ok().headers(headers).body(loginResult);
     }
 }
