@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -43,7 +44,11 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         oAuth2UserInfo = new KakaoUserInfo(token.getPrincipal().getAttributes());
         Long providerId = Long.parseLong(oAuth2UserInfo.getUid());
         String name = oAuth2UserInfo.getName();
-
+        Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
+        OAuth2User oAuth2User = (OAuth2User) authentication1.getPrincipal();
+        System.out.println(oAuth2User.getAttributes().get("id"));
+        log.info("유저 이름 : "+ name);
+        log.info("유저 아이디 : " + Long.toString(providerId));
         TblUser existUser = userRepository.findByuId(providerId);
         TblUser user;
 
@@ -51,14 +56,13 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             log.info("신규유저 입니다.");
             user = new TblUser(name, providerId);
             userRepository.save(user);
-            log.info("유저 이름 : ",name);
-            log.info("유저 id : ", providerId);
             //리프레시 토큰 생성 -> 저장 -> 쿠키에 저장
             String refreshToken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);
             saveRefreshToken(user.getId(), refreshToken);
             addRefreshTokenToCookie(request, response, refreshToken);
             //액세스토큰 생성 -> 패스에 액세스 토큰 추가
             String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
+            log.info("ACCESS_TOKEN : " + accessToken);
             String targetUrl = getTargetUrl(accessToken);
             //인증 관련 설정값, 쿠키 제거
             //clearAuthenticationAttributes(request, response);
@@ -67,14 +71,13 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         } else{
             log.info("기존 유저");
             user = existUser;
-            log.info("유저 이름 : ",name);
-            log.info("유저 id : ", providerId);
             //리프레시 토큰 생성 -> 저장 -> 쿠키에 저장
             String refreshToken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);
             saveRefreshToken(user.getId(), refreshToken);
             addRefreshTokenToCookie(request, response, refreshToken);
             //액세스토큰 생성 -> 패스에 액세스 토큰 추가
             String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
+            log.info("ACCESS_TOKEN : " + accessToken);
             String targetUrl = getTargetUrl(accessToken);
             //인증 관련 설정값, 쿠키 제거
             //clearAuthenticationAttributes(request, response);
