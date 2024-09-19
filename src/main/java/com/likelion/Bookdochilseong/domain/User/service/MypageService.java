@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -69,6 +70,11 @@ public class MypageService {
         user.patchProfileImg(imgUrl);
         return imgUrl;
     }
+
+    //월별 독서량 통계
+//    public List<String> monthlyBook(TblUser user){
+//
+//    }
 
     //프로필이미지 s3에 저장
     public String upload(MultipartFile multipartFile) throws IOException {
