@@ -4,6 +4,7 @@ import com.likelion.Bookdochilseong.config.jwt.TokenProvider;
 import com.likelion.Bookdochilseong.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.likelion.Bookdochilseong.config.oauth.OAuth2SuccessHandler;
 import com.likelion.Bookdochilseong.config.oauth.OAuth2UserCustomService;
+import com.likelion.Bookdochilseong.config.oauth.OAuthLoginFailureHandler;
 import com.likelion.Bookdochilseong.domain.User.repository.RefreshTokenRepository;
 import com.likelion.Bookdochilseong.domain.User.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,8 @@ public class WebSecurityConfig {
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserService userService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private final OAuthLoginFailureHandler oAuthLoginFailureHandler;
     //특정 http 요청에 대한 웹 기반 보안 구성
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -56,8 +59,9 @@ public class WebSecurityConfig {
 
         http.oauth2Login(oauth2 -> oauth2
                         .authorizationEndpoint(auth -> auth.authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()))
-                        .userInfoEndpoint(user -> user.userService(oAuth2UserCustomService))
-                        .successHandler(oAuth2SuccessHandler())
+                        //.userInfoEndpoint(user -> user.userService(oAuth2UserCustomService))
+                        .successHandler(oAuth2SuccessHandler)
+                        .failureHandler(oAuthLoginFailureHandler)
                 );
         // /api로 시작하는 url인 경우 401 상태 코드를 반환한도록 예외처리
         http.exceptionHandling(exception -> exception.defaultAuthenticationEntryPointFor(
@@ -83,14 +87,14 @@ public class WebSecurityConfig {
     }
 
 
-    @Bean
-    public OAuth2SuccessHandler oAuth2SuccessHandler() {
-        return new OAuth2SuccessHandler(tokenProvider,
-                refreshTokenRepository,
-                oAuth2AuthorizationRequestBasedOnCookieRepository(),
-                userService
-        );
-    }
+//    @Bean
+//    public OAuth2SuccessHandler oAuth2SuccessHandler() {
+//        return new OAuth2SuccessHandler(tokenProvider,
+//                refreshTokenRepository,
+//                oAuth2AuthorizationRequestBasedOnCookieRepository(),
+//                userService
+//        );
+//    }
 
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
