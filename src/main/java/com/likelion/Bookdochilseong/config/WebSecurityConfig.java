@@ -50,7 +50,7 @@ public class WebSecurityConfig {
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         //토큰 재발급 url은 인증 없이 접근 가능 나머지 api url은 인증 필요
-        http.authorizeRequests(auth -> auth.requestMatchers(new AntPathRequestMatcher("/api/token")).permitAll()
+        http.authorizeRequests(auth -> auth.requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated()
                         .anyRequest().permitAll());
 
