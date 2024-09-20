@@ -49,7 +49,7 @@ public class WebSecurityConfig {
         //헤더를 확인할 커스텀 필터 추가
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        //토큰 재발급 url은 인증 없이 접근 가능 나머지 api url은 인증 필요
+        //토큰 재발급 url은 인증 없이 접근 가능 나머지 api urssl은 인증 필요
         http.authorizeRequests(auth -> auth.requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated()
                         .anyRequest().permitAll());
