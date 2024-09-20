@@ -11,6 +11,6 @@ public class HealthCheckController {
 
     @GetMapping
     public ResponseEntity<String> healthCheck() {
-        return ResponseEntity.ok("Application is running");
+        return ResponseEntity.ok("Application is running /api/health");
     }
 }
